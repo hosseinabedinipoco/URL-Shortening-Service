@@ -6,6 +6,7 @@ from django.db import IntegrityError
 
 
 class UrlSerializer(serializers.ModelSerializer):
+    short_code = serializers.CharField(required=False)
     class Meta:
         model = Url
         fields = '__all__'

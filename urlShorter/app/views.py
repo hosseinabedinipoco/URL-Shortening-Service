@@ -5,6 +5,7 @@ from .models import Url
 from .serializer import UrlSerializer
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+import datetime
 # Create your views here.
 
 class create_url(APIView):
@@ -19,12 +20,15 @@ class create_url(APIView):
 class opreate_url(APIView):
     def get(self, request, code):
         url = get_object_or_404(Url, short_code=code)
+        url.statistics += 1
+        url.save()
         serializer = UrlSerializer(url)
-        return Response(url.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     def put(self, request, code):
         url = get_object_or_404(Url, short_code=code)
+        url.updated_at = datetime.datetime.now()
         serializer = UrlSerializer(url, data=request.data)
         if serializer.is_valid():
             serializer.save()
