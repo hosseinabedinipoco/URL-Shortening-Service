@@ -20,6 +20,6 @@ from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('shorten', views.create_url),
-    path('shorten/<str:code>', views.opreate_url)
+    path('shorten', views.create_url.as_view()),
+    path('shorten/<str:code>', views.opreate_url.as_view())
 ]
